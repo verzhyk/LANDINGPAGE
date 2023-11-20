@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .accordion {
+            --bs-accordion-color: var(#f4810e);
+            --bs-accordion-bg: var(#f4810e);
+            --bs-accordion-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
+            --bs-accordion-border-color: var(orange);
+            --bs-accordion-border-width: var(--bs-border-width);
+            --bs-accordion-border-radius: var(--bs-border-radius);
+            --bs-accordion-inner-border-radius: calc(var(--bs-border-radius) - (var(--bs-border-width)));
+            --bs-accordion-btn-padding-x: 1.25rem;
+            --bs-accordion-btn-padding-y: 1rem;
+            --bs-accordion-btn-color: var(#000000);
+            --bs-accordion-btn-bg: var(#f4810e);
+            --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            --bs-accordion-btn-icon-width: 1.25rem;
+            --bs-accordion-btn-icon-transform: rotate(-180deg);
+            --bs-accordion-btn-icon-transition: transform 0.2s ease-in-out;
+            --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23052c65'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            --bs-accordion-btn-focus-border-color: rgb(255, 153, 0);
+            --bs-accordion-body-padding-x: 1.25rem;
+            --bs-accordion-body-padding-y: 1rem;
+            --bs-accordion-active-color: var(--bs-primary-text-emphasis);
+            --bs-accordion-active-bg: var(--bs-primary-bg-subtle);
+        }
+
+        .accordion-button {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
+            font-size: 1rem;
+            color: var(--bs-accordion-btn-color);
+            text-align: left;
+            overflow-anchor: none;
+            border-color: #c1660bb3;
+            transition: var(--bs-accordion-transition);
+            background-color: #f4810e;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .accordion-button {
+                transition: none;
+            }
+        }
+
+        .accordion-button:not(.collapsed) {
+            color: var(--bs-accordion-active-color);
+            background-color: var(#f4810e);
+            box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
+        }
+
+        .accordion-button:not(.collapsed)::after {
+            background-image: var(--bs-accordion-btn-active-icon);
+            transform: var(--bs-accordion-btn-icon-transform);
+        }
+
+        .accordion-button::after {
+            flex-shrink: 0;
+            width: var(--bs-accordion-btn-icon-width);
+            height: var(--bs-accordion-btn-icon-width);
+            margin-left: auto;
+            content: "";
+            background-image: var(--bs-accordion-btn-icon);
+            background-repeat: no-repeat;
+            background-size: var(--bs-accordion-btn-icon-width);
+            transition: var(--bs-accordion-btn-icon-transition);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .accordion-button::after {
+                transition: none;
+            }
+        }
+
+        .accordion-button:hover {
+            z-index: 2;
+        }
+
+        .accordion-header {
+            margin-bottom: 0;
+        }
+
+        .accordion-item {
+            color: var(--bs-accordion-color);
+            background-color: var(--bs-accordion-bg);
+            background-color: #f4810e;
+            border: var(--bs-accordion-border-width) solid var(--bs-accordion-border-color);
+        }
+
+        .accordion-item:first-of-type {
+            border-top-left-radius: var(--bs-accordion-border-radius);
+            border-top-right-radius: var(--bs-accordion-border-radius);
+        }
+
+        .accordion-item:first-of-type .accordion-button {
+            border-top-left-radius: var(--bs-accordion-inner-border-radius);
+            border-top-right-radius: var(--bs-accordion-inner-border-radius);
+        }
+
+        .accordion-item:not(:first-of-type) {
+            border-top: 0;
+        }
+
+        .accordion-item:last-of-type {
+            border-bottom-right-radius: var(--bs-accordion-border-radius);
+            border-bottom-left-radius: var(--bs-accordion-border-radius);
+        }
+
+        .accordion-item:last-of-type .accordion-button.collapsed {
+            border-bottom-right-radius: var(--bs-accordion-inner-border-radius);
+            border-bottom-left-radius: var(--bs-accordion-inner-border-radius);
+        }
+
+        .accordion-item:last-of-type .accordion-collapse {
+            border-bottom-right-radius: var(--bs-accordion-border-radius);
+            border-bottom-left-radius: var(--bs-accordion-border-radius);
+        }
+
+        .accordion-body {
+            padding: var(--bs-accordion-body-padding-y) var(--bs-accordion-body-padding-x);
+        }
+
+        .accordion-flush .accordion-collapse {
+            border-width: 0;
+        }
+
+        .accordion-flush .accordion-item {
+            border-right: 0;
+            border-left: 0;
+            border-radius: 0;
+        }
+
+        .accordion-flush .accordion-item:first-child {
+            border-top: 0;
+        }
+
+        .accordion-flush .accordion-item:last-child {
+            border-bottom: 0;
+        }
+
+        .accordion-flush .accordion-item .accordion-button,
+        .accordion-flush .accordion-item .accordion-button.collapsed {
+            border-radius: 0;
+        }
+
+        [data-bs-theme=dark] .accordion-button::after {
+            --bs-accordion-btn-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236ea8fe'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+            --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%236ea8fe'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+        }
+
+        .collapse:not(.show) {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="allcontain">
+        <div class="upmenu">
+            <div class="logo">
+                <a href=""><img src="" alt=""></a>
+            </div>
+            <div class="linkstoblock">
+                <ul>
+                    <li><a href="#blockHome">Home</a></li>
+                    <li><a href="#blockAbout">About</a></li>
+                    <li><a href="#blockProduckt">Produckt</a></li>
+                    <li><a href="#blockTestimonial">Testimonial</a></li>
+                    <li><a href="#blockFaq">FAQ</a></li>
+                    <li><a href="#blockContact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="linktobuy">
+                <a href="">Buy</a>
+            </div>
+        </div>
+        <div class="blockHome" id="blockHome">
+            <img src="" alt="">
+            <h2 class="AboutTheProduckt"> Домашня Пасіка </h2>
+            <p class="Description"> Смак та користь нашого меду</p>
+        </div>
+        <div class="Block blockAbout" id="blockAbout">
+            <h3 class="AboutTheProduckt"> Натуральний Мед Високої Якості</h3>
+            <p class="Description"> Ласкаво просимо до нашого світу справжнього меду! Ми - ваш надійний постачальник
+                натурального меду, який дбайливо вирощується і збирається з найкращих джерел.</p>
+            <h3 class="AboutTheProduckt"> Наша історія</h3>
+            <p class="Description">Ми - сімейна пасіка з багатолітньою історією. Заснована з любов'ю до природи і
+                бажанням подарувати вам справжню якість і найкращий смак меду.</p>
+            <h3 class="AboutTheProduckt">Наш продукт</h3>
+            <p class="Description">Наш мед - це справжній дар природи. Він вирощений з любов'ю і турботою про ваше
+                здоров'я. Наша асортимент включає:</p>
+            <p class="DescriptionList">
+            <ul class="DescriptionOfList">
+                <a href="" class="linkToBuy">
+                    <li class="DescriptionOfListLI">Лісовий мед: Дієтичний та смачний, вирощений у дикій природі.</li>
+                </a>
+                <a href="" class="linkToBuy">
+                    <li class="DescriptionOfListLI">Акацієвий мед: Солодкий та ніжний смак, відомий своєю натуральністю
+                    </li>
+                </a>
+                <a href="" class="linkToBuy">
+                    <li class="DescriptionOfListLI">Квітковий мед: Цінується за м'який смак і корисні властивості.</li>
+                </a>
+            </ul>
+            </p>
+            <h3 class="AboutTheProduckt">Наша гордість</h3>
+            <p class="Description"> Ми пишаємося тим, що наш мед - це справжній натуральний продукт, без жодних хімічних
+                домішок або консервантів. Ми стежимо за якістю на кожному етапі вирощування і збирання.</p>
+            <img src="" alt="">
+        </div>
+        <div class="Block blockProduckt" id="blockProduckt">
+            <h2 class="AboutTheProduckt">Наш продукт</h2>
+            <div class="blockOfproduckts">
+                <div class="cubeOfProduct">
+                    <p class="descriptiomOfProduct">
+                        Лісовий мед
+                    </p>
+                    <img src="https://picsum.photos/id/123/150/200" alt="">
+                    <div class="price">
+                        10$
+                    </div>
+                    <div class="linktobuyproduc">
+                        <a href="">Buy</a>
+                    </div>
+                </div>
+                <div class="cubeOfProduct">
+                    <p class="descriptiomOfProduct">
+                        Мед із лавандою
+                    </p>
+                    <img src="https://picsum.photos/id/243/150/200" alt="">
+                    <div class="price">
+                        20$
+                    </div>
+                    <div class="linktobuyproduc">
+                        <a href="">Buy</a>
+                    </div>
+                </div>
+                <div class="cubeOfProduct">
+                    <p class="descriptiomOfProduct">
+                        Акацієвий мед
+                    </p>
+                    <img src="https://picsum.photos/id/523/150/200" alt="">
+                    <div class="price">
+                        10$
+                    </div>
+                    <div class="linktobuyproduc">
+                        <a href="">Buy</a>
+                    </div>
+                </div>
+                <div class="cubeOfProduct">
+                    <p class="descriptiomOfProduct">
+                        Квітковий мед
+                    </p>
+                    <img src="https://picsum.photos/id/626/150/200" alt="">
+                    <div class="price">
+                        6$
+                    </div>
+                    <div class="linktobuyproduc">
+                        <a href="">Buy</a>
+                    </div>
+                </div>
+                <div class="cubeOfProduct">
+                    <p class="descriptiomOfProduct">
+                        Мед гірський
+                    </p>
+                    <img src="https://picsum.photos/id/273/150/200" alt="">
+                    <div class="price">
+                        9$
+                    </div>
+                    <div class="linktobuyproduc">
+                        <a href="">Buy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Block blockTestimonial" id="blockTestimonial">
+            <h2 class="AboutTheProduckt"> Відгуки від наших клієнтів</h2>
+            <div class="testimonialOfClients">
+                <div class="cubeOfDescription">
+                    <div class="clientNameWithStars">
+                        <div class="nameOfClient">
+                            Дмитро
+                        </div>
+                        <div class="descriptionStarsOfClient">
+
+                        </div>
+                    </div>
+                    <div class="descriptionOfClient">
+                        "Цей мед справжній дар природи. Його смак неймовірний, і я відчуваю, що він приносить мені
+                        справжнє
+                        благополуччя. Рекомендую всім!"
+                    </div>
+                </div>
+                <div class="cubeOfDescription">
+                    <div class="clientNameWithStars">
+                        <div class="nameOfClient">
+                            Владислав
+                        </div>
+                        <div class="descriptionStarsOfClient">
+
+                        </div>
+                    </div>
+                    <div class="descriptionOfClient">
+                        "Ваш мед є моїм улюбленим ласощами. Я завжди шукаю якість і натуральність у продуктах, і ви
+                        дійсно
+                        цим вразили."
+                    </div>
+                </div>
+                <div class="cubeOfDescription">
+                    <div class="clientNameWithStars">
+                        <div class="nameOfClient">
+                            Юрій
+                        </div>
+                        <div class="descriptionStarsOfClient">
+
+                        </div>
+                    </div>
+                    <div class="descriptionOfClient">
+                        "Я давно переконаний, що мед - це джерело енергії та здоров'я. Ваш мед став для мене щоденним
+                        додатком до харчування, і я відчуваю його користь."
+                    </div>
+                </div>
+            </div>
+            <img src="" alt="">
+        </div>
+        <div class="Block blockFaq" id="blockFaq">
+            <h2 class="AboutTheProduckt"> Найчастіші питання стосовно меду</h2>
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                            Чи це натуральний мед?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">Так, наш мед - це абсолютно натуральний продукт без будь-яких
+                            хімічних домішок
+                            чи консервантів. Ми дбаємо про якість та чистоту нашого меду.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                            Звідки походить ваш мед?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">Наш мед походить з наших власних пасік, які розташовані в [вказати
+                            регіон]. Ми
+                            обираємо місця з найкращими квітковими джерелами для меду.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseThree" aria-expanded="false"
+                            aria-controls="flush-collapseThree">
+                            Які сорти меду ви пропонуєте?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseThree" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">Ми пропонуємо різноманітні сорти меду, включаючи лісовий мед,
+                            акацієвий мед,
+                            квітковий мед і багато інших. Кожен з них має свої особливості смаку та аромату.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFour" aria-expanded="false"
+                            aria-controls="flush-collapseFour">
+                            Як зберігати мед?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFour" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">Мед слід зберігати в сухому і прохолодному місці, захищеному від
+                            прямих
+                            сонячних променів. Не рекомендується зберігати його в холодильнику.</div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#flush-collapseFive" aria-expanded="false"
+                            aria-controls="flush-collapseFive">
+                            Як вживати мед для користі для здоров'я?
+                        </button>
+                    </h2>
+                    <div id="flush-collapseFive" class="accordion-collapse collapse"
+                        data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body">Мед можна вживати як природний солодкий покращувач смаку, а також
+                            для
+                            покращення загального стану здоров'я. Він містить багато корисних антиоксидантів і має
+                            протизапальні
+                            властивості</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Block blockContact" id="blockContact">
+            <h2 class="AboutTheProduckt"> Наші контакти
+            </h2>
+            <div class="Description">
+                <ul>
+                    <li><a href="https://t.me/slomal_sistemy" target="_blank"> <img src="/Photos/icons8-telegram.svg"
+                                alt="">Telegram</a></li>
+                    <li><a href="" target="_blank"><img src="/Photos/icons8-instagram.svg" alt=""> Instagram</a></li>
+                    <li><a href="" target="_blank"><img src="/Photos/icons8-viber.svg" alt=""> Viber</a></li>
+                    <li><a href="" target="_blank"><img src="/Photos/icons8-phone.svg" alt=""></a></li>
+                    <li>
+                        <ul>
+                            <li><a href="tel:+380943034202" target="_blank">+380943034202</a></li>
+                            <li><a href="tel:+380672304234" target="_blank">+380672304234</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
