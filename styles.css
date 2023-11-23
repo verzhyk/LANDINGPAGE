@@ -43,6 +43,12 @@ body {
     background-color: #c1660b;
 }
 
+.upmenu img {
+    height: 90px;
+    width: 90px;
+
+}
+
 .upmenu li {
     margin-right: 20px;
 }
@@ -137,14 +143,14 @@ li {
     color: var(--four-text-color);
 }
 
-.linktobuyproduc{
+.linktobuyproduc {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 5px;
     border: 2px #000000 solid;
     border-radius: 7px;
-    background-color:#c1660b;
+    background-color: #c1660b;
     box-shadow: 1px 1px 1px 1px black;
 }
 
@@ -251,6 +257,7 @@ li {
     font-size: 24px;
     margin-right: 5px;
 }
+
 .blockFaq>.AboutTheProduckt {
     margin-top: 20px;
 }
@@ -270,42 +277,101 @@ a>img {
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
 }
+
 .Description>ul>* {
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .Description>ul>li>ul {
     display: flex;
     flex-direction: column;
     font-size: 16px;
 }
-.blockContact{
+
+.blockContact {
     margin-bottom: 30px;
 }
-@media screen and (max-width: 576px) {
-}
-@media screen and (max-width: 768px) {
-    
-}
+
+@media screen and (max-width: 576px) {}
+
+@media screen and (max-width: 768px) {}
+
 @media screen and (max-width: 992px) {
-    .blockOfproduckts{
+    .blockOfproduckts {
         display: block;
     }
-    .testimonialOfClients{
+
+    .testimonialOfClients {
         display: block;
     }
-    body{
+
+    body {
         background-image: none;
         position: relative;
     }
+
     body::before {
         position: absolute;
         background-image: url("/Photos/233223.svg");
         background-size: 100%;
         transform: rotate(90deg);
         background-repeat: repeat-x;
+    }
+
+    .upmenu {
+        position: relative;
+        height: 100px;
+        margin: 0;
+        padding: 0;
+        justify-content: space-evenly;
+
+    }
+
+    .logo img {
+        padding: 0px;
+        margin: 0px;
+    }
+
+    .upmenu ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        flex-direction: column;
+    }
+
+    .upmenu li {
+        padding-bottom: 5px;
+    }
+
+    .Description ul {
+        flex-direction: column;
+    }
+
+    .Block {
+        margin-top: 10px;
+        width: 90%;
+    }
+
+    .blockHome {
+        margin-top: 10px;
+    }
+
+    .blockOfproduckts {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+    .cubeOfProduct {
+        width: 150px;
+        height: 250px;
+    }
+
+    .cubeOfProduct img {
+        width: 90px;
+        height: 90px;
     }
 }
